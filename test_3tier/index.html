@@ -23,7 +23,7 @@ $(document).ready(function() {
 			url: "http://localhost/tw_was",
 			dataType: "json",
 			success : function(data) {
-				$("#tw_result").html(data["result"]);
+				$("#tw-result").html(data["result"]);
 			},
 			error : function(xhr, status, thrown) {
 				window.alert("Error!");
