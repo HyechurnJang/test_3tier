@@ -20,7 +20,7 @@ $(document).ready(function() {
 	$("#tw-button").click(function() {
 		$.ajax({
 			type: "GET",
-			url: "http://localhost/tw_was",
+			url: "/tw_was",
 			dataType: "json",
 			success : function(data) {
 				$("#tw-result").html(data["result"]);
