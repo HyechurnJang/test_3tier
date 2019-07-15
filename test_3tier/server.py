@@ -15,6 +15,7 @@ def workloader(count):
 
 @pygics.rest('GET', '/')
 def test(req, count=10000, *args):
+    count = int(count)
     pid = os.fork()
     if pid == 0: workloader(count)
     return {'pid' : str(pid)}
