@@ -24,6 +24,6 @@ def test(req, sec=1, *args):
     sec = int(sec)
     pid = os.fork()
     if pid == 0: workloader(sec)
-    return {'pid' : str(pid)}
+    return {'pid' : str(pid), 'duration' : str(sec)}
 
 pygics.server('0.0.0.0', 8080)
