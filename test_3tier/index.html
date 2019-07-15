@@ -13,6 +13,7 @@
 <p id="tw-result">
 </p>
 </div>
+<button id="tw-refresh">Refresh Log</button>
 
 
 <script>
@@ -23,12 +24,15 @@ $(document).ready(function() {
 			url: "/tw_was",
 			dataType: "json",
 			success : function(data) {
-				$("#tw-result").html(data["result"]);
+				$("#tw-result").html("Run PID : " + data["pid"] + " during " + data["duration"] + " seconds");
 			},
 			error : function(xhr, status, thrown) {
 				window.alert("Error!");
 			}
 		});
+	});
+	$("#tw-refresh").click(function() {
+		$("#tw-result").html("");
 	});
 });
 </script>
