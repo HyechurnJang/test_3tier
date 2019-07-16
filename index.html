@@ -9,13 +9,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <h1 style="width:100%;text-align:center;">Workload Generator</h1>
-<div id="tw-result" style="width:100%;height:200px;border:1px solid #000;overflow:scroll;"></div>
-<div>
-	<input id="tw-weight" type="text" placeholder="weight"/>
-	<input id="tw-tick" type="text" placeholder="tick"/>
-	<input id="tw-seconds" type="text" placeholder="seconds"/>
-	<button id="tw-start">Start</button>
-	<button id="tw-refresh">Refresh</button>
+<div style="width:100%;text-align:center;">
+	<span>
+		<input id="tw-weight" type="text" placeholder="weight"/>
+		<input id="tw-tick" type="text" placeholder="tick"/>
+		<input id="tw-seconds" type="text" placeholder="seconds"/>
+		<button id="tw-start">Start</button>
+		<span>Counts = <span id="tw-result" style="width:100px;">0</span></span>
+	</span>
 </div>
 
 <script>
@@ -55,7 +56,7 @@ function send_task(weight, tick, seconds, start) {
 		url: "/task/" + weight,
 		dataType: "json",
 		success : function(data) {
-			$("#tw-result").append("Run PID : " + data["pid"] + ", Weight : " + data["weight"] + "<br/>");
+			$("tw-result").html($("#tw-result").html() + 1);
 		},
 		error : function(xhr, status, thrown) {
 			window.alert("Error!");
@@ -73,13 +74,11 @@ $(document).ready(function() {
 		} else {
 			control_disable();
 			console.log(weight, tick, seconds);
+			$("#tw-result").html(0);
 			var d = new Date();
 			var start = d.getTime() / 1000;
 			send_task(weight, tick, seconds, start);
 		}
-	});
-	$("#tw-refresh").click(function() {
-		$("#tw-result").html("");
 	});
 });
 </script>
