@@ -56,7 +56,7 @@ function send_task(weight, tick, seconds, start) {
 		url: "/task/" + weight,
 		dataType: "json",
 		success : function(data) {
-			$("#tw-result").html($("#tw-result").html() + 1);
+			$("#tw-result").html(($("#tw-result").html() * 1) + 1);
 		},
 		error : function(xhr, status, thrown) {
 			window.alert("Error!");
