@@ -17,9 +17,9 @@ def workloader(weight):
     
 @pygics.rest('GET', '/')
 def test(req, weight=1, *args):
-    count = int(weight)
+    weight = int(weight)
     pid = os.fork()
     if pid == 0: workloader(weight)
-    return {'pid' : str(pid), 'weight' : str(count)}
+    return {'pid' : str(pid), 'weight' : str(weight)}
 
 pygics.server('0.0.0.0', 8080)
