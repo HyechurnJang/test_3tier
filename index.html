@@ -10,31 +10,74 @@
 
 <h1 style="width:100%;text-align:center;">Workload Generator</h1>
 <div style="width:100%;height:200px;border:1px solid #000">
-<div id="tw-result">
-</div>
+	<div id="tw-result">
+	</div>
 </div>
 <div>
-<input id="tw-seconds" type="text"/>
-<button id="tw-start">Start</button>
-<button id="tw-refresh">Refresh</button>
+	<input id="tw-weight" type="text"/>
+	<input id="tw-tick" type="text"/>
+	<input id="tw-seconds" type="text"/>
+	<button id="tw-start">Start</button>
+	<button id="tw-refresh">Refresh</button>
 </div>
 
 <script>
+
+function usages() {
+	window.alert("Weight Range : 1 ~ 1000(Inst-s)\nTick Range : 100 ~ 10000(mSec)\nSeconds Range : 1 ~ 3600(Secs)");
+}
+
+function control_enable() {
+	$("#tw-weight").attr("disabled", false);
+	$("#tw-tick").attr("disabled", false);
+	$("#tw-seconds").attr("disabled", false);
+	$("#tw-start").attr("disabled", false);
+}
+
+function control_disable() {
+	$("#tw-weight").attr("disabled", true);
+	$("#tw-tick").attr("disabled", true);
+	$("#tw-seconds").attr("disabled", true);
+	$("#tw-start").attr("disabled", true);
+}
+
+function send_task(weight, tick, seconds, start) {
+	setTimeout(function() {
+		var d = new Date();
+		var end = d.getTime();
+		if (seconds > end - start) {
+			send_task(weight, tick, seconds, start);
+		} else {
+			control_enable();
+		}
+	}, tick);
+	$.ajax({
+		type: "GET",
+		url: "/task/" + weight,
+		dataType: "json",
+		success : function(data) {
+			$("#tw-result").append("Run PID : " + data["pid"] + ", Weight : " + data["weight"] + "<br/>");
+		},
+		error : function(xhr, status, thrown) {
+			window.alert("Error!");
+		}
+	});
+}
+
 $(document).ready(function() {
 	$("#tw-start").click(function() {
-		var sec = $("#tw-seconds").val();
-		console.log(sec);
-		$.ajax({
-			type: "GET",
-			url: "/tw_was/" + sec,
-			dataType: "json",
-			success : function(data) {
-				$("#tw-result").append("<p>Run PID : " + data["pid"] + " during " + data["duration"] + " seconds</p>");
-			},
-			error : function(xhr, status, thrown) {
-				window.alert("Error!");
-			}
-		});
+		var weight = $("#tw-weight").val() * 1;
+		var tick = $("#tw-tick").val() * 1;
+		var seconds = $("#tw-seconds").val() * 1;
+		if (weight < 1 || weight > 1000 || tick < 100 || tick > 10000 || seconds < 1 || seconds > 3600) {
+			usages();
+		} else {
+			control_disable();
+			console.log(weight, tick, seconds);
+			var d = new Date();
+			var start = d.getTime();
+			send_task(weight, tick, seconds, start);
+		}
 	});
 	$("#tw-refresh").click(function() {
 		$("#tw-result").html("");
