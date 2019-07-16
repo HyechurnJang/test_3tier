@@ -15,8 +15,11 @@
 		<input id="tw-tick" type="text" placeholder="tick"/>
 		<input id="tw-seconds" type="text" placeholder="seconds"/>
 		<button id="tw-start">Start</button>
-		<span>Counts = <span id="tw-result" style="width:100px;">0</span></span>
 	</span>
+</div>
+<div style="width:100%;text-align:center;">
+	<h3>Submit = <span id="tw-submit">0</span></h3>
+	<h3>Reject = <span id="tw-reject">0</span></h3>
 </div>
 
 <script>
@@ -56,10 +59,10 @@ function send_task(weight, tick, seconds, start) {
 		url: "/task/" + weight,
 		dataType: "json",
 		success : function(data) {
-			$("#tw-result").html(($("#tw-result").html() * 1) + 1);
+			$("#tw-submit").html(($("#tw-submit").html() * 1) + 1);
 		},
 		error : function(xhr, status, thrown) {
-			window.alert("Error!");
+			$("#tw-reject").html(($("#tw-reject").html() * 1) + 1);
 		}
 	});
 }
@@ -74,7 +77,8 @@ $(document).ready(function() {
 		} else {
 			control_disable();
 			console.log(weight, tick, seconds);
-			$("#tw-result").html(0);
+			$("#tw-submit").html(0);
+			$("#tw-reject").html(0);
 			var d = new Date();
 			var start = d.getTime() / 1000;
 			send_task(weight, tick, seconds, start);
