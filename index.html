@@ -44,8 +44,10 @@ function control_disable() {
 function send_task(weight, tick, seconds, start) {
 	setTimeout(function() {
 		var d = new Date();
-		var end = d.getTime();
-		if (seconds > end - start) {
+		var end = d.getTime() * 1;
+		var dis = end - start;
+		console.log(weight, tick, seconds, start, end, dis);
+		if (seconds > dis) {
 			send_task(weight, tick, seconds, start);
 		} else {
 			control_enable();
@@ -75,7 +77,7 @@ $(document).ready(function() {
 			control_disable();
 			console.log(weight, tick, seconds);
 			var d = new Date();
-			var start = d.getTime();
+			var start = d.getTime() * 1;
 			send_task(weight, tick, seconds, start);
 		}
 	});
