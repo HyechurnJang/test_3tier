@@ -25,7 +25,7 @@
 <script>
 
 function usages() {
-	window.alert("Weight Range : 1 ~ 1000(Inst-s)\nTick Range : 50 ~ 10000(mSec)\nSeconds Range : 1 ~ 3600(Secs)");
+	window.alert("Weight Range : 1 ~ 1000(Inst-s)\nTick Range : 50 ~ 10000(mSec)\nSeconds Range : 1 ~ 31536000‬(Secs)");
 }
 
 function control_enable() {
@@ -72,7 +72,7 @@ $(document).ready(function() {
 		var weight = $("#tw-weight").val() * 1;
 		var tick = $("#tw-tick").val() * 1;
 		var seconds = $("#tw-seconds").val() * 1;
-		if (weight < 1 || weight > 1000 || tick < 50 || tick > 10000 || seconds < 1 || seconds > 3600) {
+		if (weight < 1 || weight > 1000 || tick < 50 || tick > 10000 || seconds < 1 || seconds > 31536000‬) {
 			usages();
 		} else {
 			control_disable();

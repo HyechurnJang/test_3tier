@@ -5,7 +5,6 @@ Created on 2019. 7. 15.
 '''
 
 import os
-import time
 import random
 import pygics
 
